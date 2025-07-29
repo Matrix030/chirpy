@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 )
 
 func handleChirp(w http.ResponseWriter, r *http.Request) {
@@ -45,4 +46,10 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) error
 
 func respondWithError(w http.ResponseWriter, code int, msg string) error {
 	return respondWithJson(w, code, map[string]string{"error": msg})
+}
+
+func profaneCheck(s string, profaneWords []string) string {
+	//use ToLower, Split and Join for this function
+	lowerString := strings.ToLower(s)
+
 }
