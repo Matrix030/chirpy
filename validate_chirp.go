@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 )
 
 func handleChirp(w http.ResponseWriter, r *http.Request) {
@@ -26,8 +27,8 @@ func handleChirp(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Chirp is too long")
 		return
 	}
-
-	respondWithJson(w, http.StatusOK, map[string]bool{"valid": true})
+	cleaned_body := profanityChecker(chirpReq.Body)
+	respondWithJson(w, http.StatusOK, cleaned_body)
 }
 
 func respondWithJson(w http.ResponseWriter, code int, payload interface{}) error {
@@ -45,4 +46,23 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) error
 
 func respondWithError(w http.ResponseWriter, code int, msg string) error {
 	return respondWithJson(w, code, map[string]string{"error": msg})
+}
+
+func profanityChecker(s string) map[string]string {
+	profanityWords := map[string]bool{
+		"kerfuffle": true,
+		"sharbert":  true,
+		"fornax":    true,
+	}
+
+	words := strings.Split(s, " ")
+	for i, word := range words {
+		lowerWord := strings.ToLower(word)
+		if profanityWords[lowerWord] {
+			words[i] = "****"
+		}
+	}
+
+	cleaned := strings.Join(words, " ")
+	return map[string]string{"cleaned_body": cleaned}
 }
