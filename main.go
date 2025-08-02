@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/lib/pq"
 	"log"
 	"net/http"
 	"sync/atomic"
