@@ -8,3 +8,6 @@ values(
 	)
 returning *;
 
+-- name: DeleteAllUsers :exec
+delete from users;
+
