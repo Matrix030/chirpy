@@ -1,6 +1,6 @@
 -- +goose Up
 create table chirps(
-	id UUID primary key default get_random_uuid(),
+	id UUID primary key default gen_random_uuid(),
 	created_at timestamp not null,
 	updated_at timestamp not null,
 	body text not null,

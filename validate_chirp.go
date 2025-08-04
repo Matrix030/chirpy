@@ -16,7 +16,7 @@ type chirpStruct struct {
 	UserID   uuid.UUID `json:"user_id"`
 }
 
-func (cfg *apiConfig) handleChirp(w http.ResponseWriter, r *http.Request) {
+func (cfg *apiConfig) handlerChirps(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	type requestBody struct {
 		Body   string    `json:"body"`
