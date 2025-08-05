@@ -1,18 +1,18 @@
 -- name: CreateChirp :one
-insert into chirps(id, created_at, updated_at, body, user_id)
-values (
-	gen_random_uuid(),
-	NOW(),
-	NOW(),
-	$1,
-	$2)
-returning *;
+INSERT INTO chirps (id, created_at, updated_at, body, user_id)
+VALUES (
+    gen_random_uuid(),
+    NOW(),
+    NOW(),
+    $1,
+    $2
+)
+RETURNING *;
 
--- name: GetAllChirps :many
-select * from chirps order by created_at asc;
+-- name: GetChirps :many
+SELECT * FROM chirps
+ORDER BY created_at ASC;
 
--- name: GetChirpsByUser :many
-select * from chirps 
-where user_id = $1
-order by created_at asc;
-
+-- name: GetChirpsByID :one
+select * from chirps
+where id = $1;
